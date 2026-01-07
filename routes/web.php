@@ -24,6 +24,10 @@ Route::get('/', function () {
 });
 
 
+Route::middleware(['auth'])->group(function(){
+
+
+
 Route::prefix('user')->group(function () {
 
     Route::view('/home','user.homepage')->name('user.home');
@@ -33,7 +37,7 @@ Route::prefix('user')->group(function () {
     Route::view('/category/{category}', 'user.category-books')
         ->name('user.category.books');
 
-    Route::view('user/books', 'user.books')->name('user.books');
+    Route::view('/books', 'user.books')->name('user.books');
 
     Route::view('/book/{book}', 'user.book-details')
     ->name('user.book.details');
@@ -49,7 +53,7 @@ Route::prefix('user')->group(function () {
 
 
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
     Route::view('/categories', 'admin.categories')->name('admin.categories');
 
@@ -58,4 +62,7 @@ Route::prefix('admin')->group(function () {
     Route::view('/authors', 'admin.authors')->name('admin.authors');
 
     Route::view('/orders','admin.orders')->name('admin.orders');
+});
+
+
 });
